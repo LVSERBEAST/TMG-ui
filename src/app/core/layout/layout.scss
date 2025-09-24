@@ -1,0 +1,29 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.layout-container {
+  min-height: inherit;
+  background-color: var(--bg-primary);
+}
+
+.main-content {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .main-content {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .main-content {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}

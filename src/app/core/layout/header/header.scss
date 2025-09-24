@@ -1,0 +1,59 @@
+:host {
+  display: block;
+}
+
+.header {
+  background-color: var(--bg-white);
+  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid var(--border-gray-200);
+}
+
+.header-container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+}
+
+.header-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.header-nav {
+  display: none;
+  gap: 2rem;
+}
+
+.nav-link {
+  color: rgb(107 114 128);
+  text-decoration: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 150ms ease-in-out;
+}
+
+.nav-link:hover {
+  color: rgb(55 65 81);
+}
+
+@media (min-width: 768px) {
+  .header-nav {
+    display: flex;
+  }
+}
