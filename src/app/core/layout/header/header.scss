@@ -57,3 +57,17 @@
     display: flex;
   }
 }
+
+.hamburger-line {
+  position: absolute;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background-color: rgb(75, 85, 99);
+  transition: all 0.3s ease-in-out;
+  transform-origin: center;
+}
+
+button:hover .hamburger-line {
+  background-color: rgb(31, 41, 55);
+}

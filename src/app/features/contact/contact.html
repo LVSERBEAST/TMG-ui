@@ -1,0 +1,194 @@
+<div class="min-h-screen bg-gray-900">
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-white mb-8">Get in Touch</h1>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Contact Information -->
+      <div>
+        <div class="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-6 mb-8">
+          <h2 class="text-2xl font-semibold text-white mb-4">Connect with The Money Gigs Community</h2>
+          <p class="text-gray-300 mb-6 leading-relaxed">
+            Whether you're a musician with feedback, a venue owner wanting to improve, or a journalist 
+            covering the music scene - we want to hear from you.
+          </p>
+          
+          <div class="space-y-4">
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center mr-4">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="font-medium text-white">Musicians & General</p>
+                <p class="text-gray-400">hello@themoneygigs.com</p>
+              </div>
+            </div>
+            
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-cyan-600 rounded-lg flex items-center justify-center mr-4">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="font-medium text-white">Venues & Business</p>
+                <p class="text-gray-400">venues@themoneygigs.com</p>
+              </div>
+            </div>
+            
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-yellow-500 rounded-lg flex items-center justify-center mr-4">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="font-medium text-white">Press & Media</p>
+                <p class="text-gray-400">press@themoneygigs.com</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Contact Reasons -->
+        <div class="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-6">
+          <h3 class="text-lg font-semibold text-white mb-4">Common Reasons Musicians Reach Out:</h3>
+          <ul class="space-y-2 text-gray-300">
+            <li class="flex items-center">
+              <span class="w-2 h-2 bg-purple-400 rounded-full mr-3"></span>
+              Venue not responding to payment disputes
+            </li>
+            <li class="flex items-center">
+              <span class="w-2 h-2 bg-cyan-400 rounded-full mr-3"></span>
+              Feature requests for the app
+            </li>
+            <li class="flex items-center">
+              <span class="w-2 h-2 bg-yellow-500 rounded-full mr-3"></span>
+              Partnership and collaboration opportunities
+            </li>
+            <li class="flex items-center">
+              <span class="w-2 h-2 bg-green-400 rounded-full mr-3"></span>
+              Technical support and bug reports
+            </li>
+            <li class="flex items-center">
+              <span class="w-2 h-2 bg-purple-400 rounded-full mr-3"></span>
+              Sharing great venue experiences
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-6">
+        @if (submitted()) {
+          <div class="text-center py-8">
+            <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-white mb-2">Message Sent!</h3>
+            <p class="text-gray-400 mb-4">
+              Thanks for reaching out. We'll get back to you within 24 hours.
+            </p>
+            <button (click)="resetForm()" 
+                    class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors cursor-pointer">
+              Send Another Message
+            </button>
+          </div>
+        } @else {
+          <h2 class="text-xl font-semibold text-white mb-4">Send us a Message</h2>
+          
+          @if (error()) {
+            <div class="bg-red-900 border border-red-700 rounded-md p-4 mb-4">
+              <p class="text-red-300">{{ error() }}</p>
+            </div>
+          }
+
+          <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-4">
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Name *</label>
+              <input type="text" 
+                     id="name" 
+                     formControlName="name"
+                     class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white placeholder-gray-400">
+              @if (contactForm.get('name')?.invalid && contactForm.get('name')?.touched) {
+                <p class="text-red-400 text-sm mt-1">Name is required (minimum 2 characters)</p>
+              }
+            </div>
+
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email *</label>
+              <input type="email" 
+                     id="email" 
+                     formControlName="email"
+                     class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white placeholder-gray-400">
+              @if (contactForm.get('email')?.invalid && contactForm.get('email')?.touched) {
+                <p class="text-red-400 text-sm mt-1">Please enter a valid email address</p>
+              }
+            </div>
+
+            <div>
+              <label for="subject" class="block text-sm font-medium text-gray-300 mb-1">Subject *</label>
+              <select formControlName="subject" 
+                      class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white">
+                <option value="">Choose a topic...</option>
+                <option value="venue-issue">Venue Issue/Dispute</option>
+                <option value="app-feedback">App Feedback/Feature Request</option>
+                <option value="partnership">Partnership/Business</option>
+                <option value="press">Press/Media Inquiry</option>
+                <option value="technical">Technical Support</option>
+                <option value="other">Other</option>
+              </select>
+              @if (contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched) {
+                <p class="text-red-400 text-sm mt-1">Please select a subject</p>
+              }
+            </div>
+
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-300 mb-1">Message *</label>
+              <textarea id="message" 
+                        rows="6" 
+                        formControlName="message"
+                        placeholder="Tell us what's on your mind..."
+                        class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-vertical text-white placeholder-gray-400">
+              </textarea>
+              @if (contactForm.get('message')?.invalid && contactForm.get('message')?.touched) {
+                <p class="text-red-400 text-sm mt-1">Message is required (minimum 10 characters)</p>
+              }
+            </div>
+
+            <div class="bg-gray-700 rounded-lg p-4">
+              <p class="text-gray-300 text-sm">
+                <strong>Pro tip:</strong> If you're reporting a venue issue, include the venue name, 
+                date of the gig, and specific details about what happened. The more info you provide, 
+                the better we can help.
+              </p>
+            </div>
+
+            <button type="submit" 
+                    [disabled]="!contactForm.valid || loading()"
+                    class="w-full px-4 py-3 bg-purple-600 text-white rounded-md hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer">
+              @if (loading()) {
+                <div class="flex items-center justify-center">
+                  <svg class="animate-spin -ml-1 mr-3 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Sending...
+                </div>
+              } @else {
+                Send Message
+              }
+            </button>
+          </form>
+        }
+      </div>
+    </div>
+  </div>
+</div>

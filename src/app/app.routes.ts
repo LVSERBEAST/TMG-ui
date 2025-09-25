@@ -4,11 +4,29 @@ import { News } from './features/news/news';
 import { Admin } from './features/admin/admin';
 import { AdminNews } from './features/admin/components/admin-news/admin-news';
 import { NewsArticleDetail } from './features/news/components/news-article-detail/news-article-detail';
+import { About } from './features/about/about';
+import { Contact } from './features/contact/contact';
+import { FAQ } from './features/faq/faq';
+import { Careers } from './features/careers/careers';
+import { PrivacyPolicy } from './features/privacy-policy/privacy-policy';
+import { Support } from './features/support/support';
+import { TermsOfService } from './features/terms-of-service/terms-of-service';
+import { Blog } from './features/blog/blog';
+import { Sitemap } from './features/sitemap/sitemap';
 
 export const routes: Routes = [
   { path: '', component: Home },
   { path: 'news', component: News },
   { path: 'news/:id', component: NewsArticleDetail },
+  { path: 'about', component: About },
+  { path: 'contact', component: Contact },
+  { path: 'faq', component: FAQ },
+  { path: 'support', component: Support },
+  { path: 'careers', component: Careers },
+  { path: 'blog', component: Blog },
+  { path: 'privacy-policy', component: PrivacyPolicy },
+  { path: 'terms-of-service', component: TermsOfService },
+  { path: 'sitemap', component: Sitemap },
   { path: 'admin', component: Admin },
   { path: 'admin/news', component: AdminNews },
   { path: '**', redirectTo: '' },
