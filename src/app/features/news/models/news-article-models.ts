@@ -3,8 +3,14 @@ export interface NewsArticle {
   title: string;
   slug: string;
   content: string;
-  metaDescription: string;
+  metaDescription?: string;
+  author: string;
+  summary?: string;
+  tags: string[];
+  category?: string;
+  featuredImageUrl?: string;
   isPublished: boolean;
+  publishedAt?: string;
   createdBy: string;
   createdAt: string;
   updatedBy?: string;
@@ -13,18 +19,29 @@ export interface NewsArticle {
 
 export interface CreateNewsArticleRequest {
   title: string;
-  slug: string;
   content: string;
   metaDescription?: string;
+  author: string;
+  summary?: string;
+  category?: string;
+  featuredImageUrl?: string;
+  tags: string[];
 }
 
-export interface UpdateNewsArticleRequest extends CreateNewsArticleRequest {
-  isPublished: boolean;
+export interface UpdateNewsArticleRequest {
+  title: string;
+  content: string;
+  metaDescription?: string;
+  author: string;
+  summary?: string;
+  category?: string;
+  featuredImageUrl?: string;
+  tags: string[];
 }
 
-// export interface PageFilters {
-//   pageNumber?: number;
-//   pageSize?: number;
-//   isPublished?: boolean;
-//   searchTerm?: string;
-// }
+export interface PageFilters {
+  pageNumber?: number;
+  pageSize?: number;
+  isPublished?: boolean;
+  searchTerm?: string;
+}

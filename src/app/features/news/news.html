@@ -1,1 +1,88 @@
-<p>News works!</p>
+<div class="max-w-4xl mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold text-gray-900 mb-8">Latest News</h1>
+
+  @if (loading()) {
+  <div class="text-center py-8">
+    <div class="text-gray-600">Loading articles...</div>
+  </div>
+  } @if (error() && !loading()) {
+  <div class="bg-red-50 border border-red-200 rounded-md p-4 mb-6">
+    <div class="text-red-700">{{ error() }}</div>
+    <button (click)="retryLoad()" class="mt-2 text-red-600 hover:text-red-800 underline">
+      Try again
+    </button>
+  </div>
+  } @if (!loading() && !error()) {
+  <div class="space-y-8">
+    @if (showEmptyState()) {
+    <div class="text-center py-12 text-gray-500">No articles found.</div>
+    } @for (article of articles(); track article.id) {
+    <article
+      class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow h-32"
+    >
+      <div class="flex h-full">
+        <div class="flex-1 p-4 flex flex-col justify-center overflow-hidden">
+          <h2 class="text-lg font-semibold text-gray-900 mb-1 line-clamp-2">
+            {{ article.title }}
+          </h2>
+
+          <div class="flex items-center text-sm text-gray-500 mb-1">
+            <span>By {{ article.author }}</span>
+            <span class="mx-2">•</span>
+            <time>{{ formatDate(article.publishedAt || article.createdAt) }}</time>
+          </div>
+
+          @if (article.summary) {
+          <p class="text-gray-600 text-sm line-clamp-2 pb-1">
+            {{ article.summary }}
+          </p>
+          }
+
+          <div class="flex items-center justify-between">
+            <button
+              (click)="navigateToArticle(article.id)"
+              class="text-blue-600 hover:text-blue-800 font-medium text-sm cursor-pointer"
+            >
+              Read more →
+            </button>
+          </div>
+        </div>
+
+        <div class="h-full aspect-square flex-shrink-0">
+          @if (article.featuredImageUrl) {
+          <img
+            [src]="article.featuredImageUrl"
+            [alt]="`${article.title}-image`"
+            class="w-full h-full object-cover"
+          />
+          }
+        </div>
+      </div>
+    </article>
+    } @if (showPagination()) {
+    <div class="flex justify-center items-center space-x-4 py-8">
+      <button
+        (click)="onPreviousPage()"
+        [disabled]="!hasPreviousPage()"
+        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Previous
+      </button>
+
+      <span class="text-sm text-gray-700">
+        Page {{ currentPage() }} of {{ totalPages() }}
+        <span class="text-gray-500">({{ totalCount() }} articles)</span>
+      </span>
+
+      <button
+        (click)="onNextPage()"
+        [disabled]="!hasNextPage()"
+        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Next
+      </button>
+    </div>
+    }
+  </div>
+  }
+</div>

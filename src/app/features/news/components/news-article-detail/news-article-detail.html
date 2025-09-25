@@ -1,0 +1,96 @@
+<p>news-article-detail works!</p>
+<div class="max-w-4xl mx-auto px-4 py-8">
+  
+  <nav class="mb-6">
+    <a routerLink="/news" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+      ← Back to News
+    </a>
+  </nav>
+
+  @if (loading()) {
+    <div class="text-center py-8">
+      <div class="text-gray-600">Loading article...</div>
+    </div>
+  }
+
+  @if (error() && !loading()) {
+    <div class="bg-red-50 border border-red-200 rounded-md p-4 mb-6">
+      <div class="text-red-700">{{ error() }}</div>
+      <button (click)="retryLoad()" class="mt-2 text-red-600 hover:text-red-800 underline">
+        Try again
+      </button>
+    </div>
+  }
+
+  @if (article() && !loading()) {
+    <article class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+      
+      @if (article()?.featuredImageUrl) {
+        <div class="aspect-video w-full">
+          <img [src]="article()?.featuredImageUrl" [alt]="article()?.title" 
+               class="w-full h-full object-contain">
+        </div>
+      }
+
+      <div class="p-8">
+        
+        <header class="mb-6">
+          <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ article()?.title }}</h1>
+          
+          <div class="flex items-center text-sm text-gray-500 mb-4">
+            <span>By {{ article()?.author }}</span>
+            <span class="mx-2">•</span>
+            <time [dateTime]="article()?.publishedAt">
+              {{ formatDate(article()?.publishedAt || article()?.createdAt) }}
+            </time>
+            @if (article()?.category) {
+              <span class="mx-2">•</span>
+              <span class="text-blue-600 font-medium">{{ article()?.category }}</span>
+            }
+          </div>
+
+          @if (article()?.summary) {
+            <div class="text-lg text-gray-600 font-light leading-relaxed mb-6 p-4 bg-gray-50 rounded-lg">
+              {{ article()?.summary }}
+            </div>
+          }
+        </header>
+
+        <div class="prose prose-lg max-w-none mb-8">
+          <div [innerHTML]="article()?.content" class="text-gray-800 leading-relaxed"></div>
+        </div>
+
+        @if (article()?.tags && article()?.tags!.length > 0) {
+          <footer class="pt-6 border-t border-gray-200">
+            <div class="flex flex-wrap gap-2">
+              <span class="text-sm text-gray-500 mr-2">Tags:</span>
+              @for (tag of article()?.tags; track tag) {
+                <span class="inline-block bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full font-medium">
+                  #{{ tag }}
+                </span>
+              }
+            </div>
+          </footer>
+        }
+
+        <footer class="mt-8 pt-6 border-t border-gray-200">
+          <div class="flex justify-between items-center">
+            <div class="text-sm text-gray-500">
+              @if (article()?.updatedAt && article()?.updatedAt !== article()?.createdAt) {
+                <span>Last updated: {{ formatDate(article()?.updatedAt) }}</span>
+              } @else {
+                <span>Published: {{ formatDate(article()?.publishedAt || article()?.createdAt) }}</span>
+              }
+            </div>
+            
+            <a routerLink="/news" 
+               class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-md hover:bg-blue-100 transition-colors">
+              ← More Articles
+            </a>
+          </div>
+        </footer>
+
+      </div>
+    </article>
+  }
+</div>

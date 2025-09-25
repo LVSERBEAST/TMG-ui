@@ -1,5 +1,5 @@
 export interface PaginatedResponse<T> {
-  items: T[];
+  data: T[];
   totalCount: number;
   pageNumber: number;
   pageSize: number;
@@ -7,7 +7,7 @@ export interface PaginatedResponse<T> {
 }
 
 export interface ErrorResponse {
-  message: string;
+  title: string;
   errors: string[];
 }
 
