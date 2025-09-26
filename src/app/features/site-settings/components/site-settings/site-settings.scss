@@ -1,0 +1,29 @@
+﻿/* Hide native select arrow for custom color swatch select */
+select[name^="siteTitlePartColor"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: none !important;
+  background: none !important;
+}
+select[name^="siteTitlePartColor"]::-ms-expand {
+  display: none;
+}
+.site-settings-container {
+  min-height: 100vh;
+  background-color: #f9fafb;
+  
+  h1 {
+    color: #1f2937;
+  }
+  
+  h2 {
+    color: #374151;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 0.5rem;
+  }
+  
+  .bg-white {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  }
+}
