@@ -1,132 +1,153 @@
-<div class="max-w-6xl mx-auto px-4 py-8">
-  <div class="flex justify-between items-center mb-8">
-    <h1 class="text-3xl font-bold text-gray-900">News Management</h1>
-    <button (click)="openCreateModal()" 
-            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium">
-      Create Article
-    </button>
-  </div>
+<div class="min-h-screen bg-gray-900">
+  <div class="max-w-6xl mx-auto px-4 py-8">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-900">News Management</h1>
+      <button
+        (click)="openCreateModal()"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium"
+      >
+        Create Article
+      </button>
+    </div>
 
-  @if (error()) {
+    @if (error()) {
     <div class="bg-red-50 border border-red-200 rounded-md p-4 mb-6">
       <div class="text-red-700">{{ error() }}</div>
       <button (click)="dismissError()" class="mt-2 text-red-600 hover:text-red-800 underline">
         Dismiss
       </button>
     </div>
-  }
-
-  @if (loading()) {
+    } @if (loading()) {
     <div class="text-center py-8">
       <div class="text-gray-600">Loading articles...</div>
     </div>
-  }
-
-  @if (!loading()) {
+    } @if (!loading()) {
     <div class="space-y-4">
-      
       @if (articles().length === 0) {
-        <div class="text-center py-12 text-gray-500">
-          No articles found. Create your first article to get started.
-        </div>
-      }
+      <div class="text-center py-12 text-gray-500">
+        No articles found. Create your first article to get started.
+      </div>
+      } @for (article of articles(); track article.id) {
+      <article
+        class="bg-gray-800 rounded-lg shadow-sm border border-gray-700 overflow-hidden hover:shadow-md transition-shadow h-32"
+      >
+        <div class="flex h-full">
+          <div class="flex-1 p-4 flex flex-col justify-center overflow-hidden">
+            <div class="flex items-center justify-between mb-2">
+              <h2 class="text-lg font-semibold text-white line-clamp-1 flex-1">
+                {{ article.title }}
+              </h2>
+              <span
+                class="inline-flex px-2 py-1 text-xs font-semibold rounded-full ml-3"
+                [class.bg-cyan-500]="article.isPublished"
+                [class.text-white]="article.isPublished"
+                [class.bg-gray-600]="!article.isPublished"
+                [class.text-gray-300]="!article.isPublished"
+              >
+                {{ article.isPublished ? 'Published' : 'Draft' }}
+              </span>
+            </div>
 
-      @for (article of articles(); track article.id) {
-        <article class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow h-32">
-          <div class="flex h-full">
-            
-            <div class="flex-1 p-4 flex flex-col justify-center overflow-hidden">
-  <div class="flex items-center justify-between mb-2">
-    <h2 class="text-lg font-semibold text-gray-900 line-clamp-1 flex-1">
-      {{ article.title }}
-    </h2>
-    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full ml-3"
-          [class.bg-green-100]="article.isPublished"
-          [class.text-green-800]="article.isPublished"
-          [class.bg-yellow-100]="!article.isPublished"
-          [class.text-yellow-800]="!article.isPublished">
-      {{ article.isPublished ? 'Published' : 'Draft' }}
-    </span>
-  </div>
-
-  <div class="flex items-center text-sm text-gray-500 mb-2">
-    <span>By {{ article.author }}</span>
-    <span class="mx-2">•</span>
-    <time>{{ formatDate(article.createdAt) }}</time>
-    @if (article.category) {
-      <span class="mx-2">•</span>
-      <span class="text-blue-600">{{ article.category }}</span>
-    }
-  </div>
-
-  @if (article.summary) {
-    <p class="text-gray-600 text-sm line-clamp-1 mb-2">
-      {{ article.summary }}
-    </p>
-  }
-
-  <div class="flex items-center gap-2">
-    <button (click)="openEditModal(article)" class="text-blue-600 hover:text-blue-900 text-sm font-medium">
-      Edit
-    </button>
-    @if (!article.isPublished) {
-      <button (click)="onPublishArticle(article)" class="text-green-600 hover:text-green-900 text-sm font-medium">
-        Publish
-      </button>
-    } @else {
-      <button (click)="onUnpublishArticle(article)" class="text-yellow-600 hover:text-yellow-900 text-sm font-medium">
-        Unpublish
-      </button>
-    }
-    <button (click)="onDeleteArticle(article)" class="text-red-600 hover:text-red-900 text-sm font-medium">
-      Delete
-    </button>
-    <button (click)="navigateToArticle(article.id)" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-      Read more →
-    </button>
-  </div>
-</div>
-
-            <div class="h-full aspect-square flex-shrink-0">
-              @if (article.featuredImageUrl) {
-                <img [src]="article.featuredImageUrl" [alt]="article.title" 
-                     class="w-full h-full object-cover">
-              } @else {
-                <div class="w-full h-full bg-gray-100 flex items-center justify-center">
-                  <div class="text-gray-400 text-xs">No image</div>
-                </div>
+            <div class="flex items-center text-sm text-gray-400 mb-2">
+              <span>By {{ article.author }}</span>
+              <span class="mx-2">•</span>
+              <time>{{ formatDate(article.createdAt) }}</time>
+              @if (article.category) {
+              <span class="mx-2">•</span>
+              <span class="text-cyan-400">{{ article.category }}</span>
               }
             </div>
 
+            @if (article.summary) {
+            <p class="text-gray-300 text-sm line-clamp-1 mb-2">
+              {{ article.summary }}
+            </p>
+            }
+
+            <div class="flex items-center gap-2">
+              <button
+                (click)="openEditModal(article)"
+                class="text-blue-600 hover:text-blue-900 text-sm font-medium"
+              >
+                Edit
+              </button>
+              @if (!article.isPublished) {
+              <button
+                (click)="onPublishArticle(article)"
+                class="text-green-600 hover:text-green-900 text-sm font-medium"
+              >
+                Publish
+              </button>
+              } @else {
+              <button
+                (click)="onUnpublishArticle(article)"
+                class="text-yellow-600 hover:text-yellow-900 text-sm font-medium"
+              >
+                Unpublish
+              </button>
+              }
+              <button
+                (click)="onDeleteArticle(article)"
+                class="text-red-600 hover:text-red-900 text-sm font-medium"
+              >
+                Delete
+              </button>
+              <button
+                (click)="navigateToArticle(article.id)"
+                class="text-blue-600 hover:text-blue-800 font-medium text-sm"
+              >
+                Read more →
+              </button>
+            </div>
           </div>
-        </article>
+
+          <div class="h-full aspect-square flex-shrink-0">
+            @if (article.featuredImageUrl) {
+            <img
+              [src]="article.featuredImageUrl"
+              [alt]="article.title"
+              class="w-full h-full object-cover"
+            />
+            } @else {
+            <div
+              class="w-full h-full bg-gray-700 flex items-center justify-center border-l border-gray-600"
+            >
+              <div class="text-gray-500 text-xs">No image</div>
+            </div>
+            }
+          </div>
+        </div>
+      </article>
       }
     </div>
 
     @if (showPagination()) {
-      <div class="flex justify-center items-center space-x-4 py-8">
-        <button (click)="onPreviousPage()" 
-                [disabled]="!hasPreviousPage()"
-                class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
-          Previous
-        </button>
+    <div class="flex justify-center items-center space-x-4 py-8">
+      <button
+        (click)="onPreviousPage()"
+        [disabled]="!hasPreviousPage()"
+        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Previous
+      </button>
 
-        <span class="text-sm text-gray-700">
-          Page {{ currentPage() }} of {{ totalPages() }} 
-          <span class="text-gray-500">({{ totalCount() }} articles)</span>
-        </span>
+      <span class="text-sm text-gray-700">
+        Page {{ currentPage() }} of {{ totalPages() }}
+        <span class="text-gray-500">({{ totalCount() }} articles)</span>
+      </span>
 
-        <button (click)="onNextPage()" 
-                [disabled]="!hasNextPage()"
-                class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
-          Next
-        </button>
-      </div>
-    }
-  }
-</div>
+      <button
+        (click)="onNextPage()"
+        [disabled]="!hasNextPage()"
+        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Next
+      </button>
+    </div>
+    } }
+  </div>
 
-@if (showCreateModal()) {
+  @if (showCreateModal()) {
   <div class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center p-4 z-50">
     <div class="bg-white rounded-lg max-w-2xl w-full max-h-screen overflow-y-auto">
       <div class="p-6">
@@ -142,62 +163,95 @@
           <div class="space-y-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Title *</label>
-              <input type="text" formControlName="title" 
-                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <input
+                type="text"
+                formControlName="title"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
             </div>
 
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Author *</label>
-              <input type="text" formControlName="author" 
-                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <input
+                type="text"
+                formControlName="author"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
             </div>
 
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Summary</label>
-              <textarea formControlName="summary" rows="2"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+              <textarea
+                formControlName="summary"
+                rows="2"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              ></textarea>
             </div>
 
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Content *</label>
-              <textarea formControlName="content" rows="8"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+              <textarea
+                formControlName="content"
+                rows="8"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              ></textarea>
             </div>
 
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Meta Description</label>
-              <textarea formControlName="metaDescription" rows="2"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+              <textarea
+                formControlName="metaDescription"
+                rows="2"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              ></textarea>
             </div>
 
             <div class="grid grid-cols-2 gap-4">
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                <input type="text" formControlName="category" 
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input
+                  type="text"
+                  formControlName="category"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
               </div>
 
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Tags (comma separated)</label>
-                <input type="text" formControlName="tags" placeholder="tech, news, business"
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <label class="block text-sm font-medium text-gray-700 mb-1"
+                  >Tags (comma separated)</label
+                >
+                <input
+                  type="text"
+                  formControlName="tags"
+                  placeholder="tech, news, business"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
               </div>
             </div>
 
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Featured Image URL</label>
-              <input type="url" formControlName="featuredImageUrl" 
-                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <input
+                type="url"
+                formControlName="featuredImageUrl"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
             </div>
           </div>
 
           <div class="flex justify-end space-x-3 mt-6">
-            <button type="button" (click)="closeCreateModal()" 
-                    class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+            <button
+              type="button"
+              (click)="closeCreateModal()"
+              class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+            >
               Cancel
             </button>
-            <button type="submit" [disabled]="!createForm.valid"
-                    class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed">
+            <button
+              type="submit"
+              [disabled]="!createForm.valid"
+              class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               Create Article
             </button>
           </div>
@@ -205,15 +259,15 @@
       </div>
     </div>
   </div>
-}
-
-@if (showEditModal()) {
-  <div class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-lg max-w-2xl w-full max-h-screen overflow-y-auto">
+  } @if (showEditModal()) {
+  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div
+      class="bg-gray-800 rounded-lg max-w-2xl w-full max-h-screen overflow-y-auto border border-gray-700"
+    >
       <div class="p-6">
         <div class="flex justify-between items-center mb-4">
-          <h2 class="text-xl font-semibold text-gray-900">Edit Article</h2>
-          <button (click)="closeEditModal()" class="text-gray-400 hover:text-gray-600">
+          <h2 class="text-xl font-semibold text-white">Edit Article</h2>
+          <button (click)="closeEditModal()" class="text-gray-400 hover:text-gray-300">
             <span class="sr-only">Close</span>
             ✕
           </button>
@@ -222,63 +276,96 @@
         <form [formGroup]="editForm" (ngSubmit)="onUpdateArticle()">
           <div class="space-y-4">
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Title *</label>
-              <input type="text" formControlName="title" 
-                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <label class="block text-sm font-medium text-gray-300 mb-1">Title *</label>
+              <input
+                type="text"
+                formControlName="title"
+                class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
+              />
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Author *</label>
-              <input type="text" formControlName="author" 
-                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <label class="block text-sm font-medium text-gray-300 mb-1">Author *</label>
+              <input
+                type="text"
+                formControlName="author"
+                class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
+              />
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Summary</label>
-              <textarea formControlName="summary" rows="2"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+              <label class="block text-sm font-medium text-gray-300 mb-1">Summary</label>
+              <textarea
+                formControlName="summary"
+                rows="2"
+                class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
+              ></textarea>
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Content *</label>
-              <textarea formControlName="content" rows="8"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+              <label class="block text-sm font-medium text-gray-300 mb-1">Content *</label>
+              <textarea
+                formControlName="content"
+                rows="8"
+                class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
+              ></textarea>
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Meta Description</label>
-              <textarea formControlName="metaDescription" rows="2"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+              <label class="block text-sm font-medium text-gray-300 mb-1">Meta Description</label>
+              <textarea
+                formControlName="metaDescription"
+                rows="2"
+                class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
+              ></textarea>
             </div>
 
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                <input type="text" formControlName="category" 
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <label class="block text-sm font-medium text-gray-300 mb-1">Category</label>
+                <input
+                  type="text"
+                  formControlName="category"
+                  class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
+                />
               </div>
 
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Tags (comma separated)</label>
-                <input type="text" formControlName="tags" placeholder="tech, news, business"
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <label class="block text-sm font-medium text-gray-300 mb-1"
+                  >Tags (comma separated)</label
+                >
+                <input
+                  type="text"
+                  formControlName="tags"
+                  placeholder="tech, news, business"
+                  class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
+                />
               </div>
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Featured Image URL</label>
-              <input type="url" formControlName="featuredImageUrl" 
-                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <label class="block text-sm font-medium text-gray-300 mb-1">Featured Image URL</label>
+              <input
+                type="url"
+                formControlName="featuredImageUrl"
+                class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
+              />
             </div>
           </div>
 
           <div class="flex justify-end space-x-3 mt-6">
-            <button type="button" (click)="closeEditModal()" 
-                    class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+            <button
+              type="button"
+              (click)="closeEditModal()"
+              class="px-4 py-2 text-sm font-medium text-gray-300 bg-gray-700 border border-gray-600 rounded-md hover:bg-gray-600"
+            >
               Cancel
             </button>
-            <button type="submit" [disabled]="!editForm.valid"
-                    class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed">
+            <button
+              type="submit"
+              [disabled]="!editForm.valid"
+              class="px-4 py-2 text-sm font-medium text-white bg-cyan-600 rounded-md hover:bg-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               Update Article
             </button>
           </div>
@@ -286,4 +373,5 @@
       </div>
     </div>
   </div>
-}
+  }
+</div>
